@@ -21,6 +21,10 @@ bomb_is_armed = False
 #set the number of notes that can be parsed once the bomb is enabled
 bomb_countdown = 10
 
+#piano_stats
+piano_stats = [-99, -99, -99, -99, -99]
+_rav_speed = 5 # use 5 notes for running average playing speed
+
 print('your device id is: ', device_id, '\n')
 
 # Use your favourite mapping of the keys
@@ -55,6 +59,17 @@ try:
         msg = codeK.get_message()
 
         if msg:
+
+            #Get the piano playing speed
+            if msg[0][0] == 128: #noteOff -> add deltatime to previous event
+                piano_stats[_rav_speed - 1] = piano_stats[_rav_speed - 1] \
+                                              + msg[1]
+            elif msg[0][0] == 144: #noteOn
+                piano_stats.append(msg[1])
+                piano_stats = piano_stats[-_rav_speed:]
+                print("Average of last {0:d} notes: {1:.2f} notes/second - "
+                      .format(_rav_speed, _rav_speed/sum(piano_stats)), end="")
+
             trigger_count = False
             #motifs:
             trigger_count = mainMem.parse_midi(msg, 'full') or trigger_count
