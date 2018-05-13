@@ -23,7 +23,7 @@ PROTOTYPES = ('hello_world', 'motippets', 'hybrid')
 def doHelp():
     """
     Show the help for running this script.
-    """
+    """   
     print('This script will help you to run the CodeKlavier.')
     print('')
     print('Usage: ./codeklaver.py [OPTION]')

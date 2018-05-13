@@ -35,6 +35,7 @@ class Motippets(object):
         self._pianosections = [47, 78, 108]
         self._motif1_counter = 0
         self._motif2_counter = 0
+        self._motif3_counter = 0
         self._intervalsArray = []
         self._interval = 0
         self._unmapCounter1 = 0
@@ -161,6 +162,12 @@ class Motippets(object):
             elif section == 'hi':
                 if note > self._pianosections[1]:
                     self.memorize(note, 4, False, 'Hi: ')
+                    
+                    motif3_played = self.compare_motif(self._memory, 'motif3', Motifs.get('motif_3'), note, False)
+                    
+                    if motif3_played and self._motif3_counter == 0:
+                        self.mapscheme.snippets(3)
+                        self._motif3_counter = 1                    
 
                     mini_motif_1_Hi_played = self.compare_motif(
                         self._memory, 'mini',
@@ -552,7 +559,8 @@ class Motippets(object):
         i.e. detect if a motif is played
 
         TODO: describe input params
-        """
+        """       
+        
         if motiftype == 'mini':
             if note in motif:
                 self._miniMotifs.append(note)

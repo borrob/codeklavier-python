@@ -11,6 +11,7 @@ motifs = {}
 motifs_anne = {}
 motifs_anne['motif_1'] = [59, 62, 66, 60, 64, 67, 62, 69, 66]
 motifs_anne['motif_2'] = [70, 51, 62, 60, 44, 63, 66, 62, 55, 49]
+motifs_anne['motif_3'] = [84, 85, 86]
 motifs_anne['mini_motif_1_low'] = [35, 38, 42]
 motifs_anne['mini_motif_2_low'] = [26, 32, 35, 38]
 motifs_anne['mini_motif_3_low'] = [39, 43, 46]

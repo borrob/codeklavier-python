@@ -374,6 +374,8 @@ class Mapping_Motippets:
         try:
             self.__snippet1 = config['snippets'].get('snippet1')
             self.__snippet2 = config['snippets'].get('snippet2')
+            self.__snippet3 = config['snippets'].get('snippet3')
+            
 
             self.__mini_snippet_hi_1 = config['snippets'].get('mini_snippet_hi_1')
             self.__mini_unmap_hi_2 = config['snippets'].get('mini_unmap_hi_2')
@@ -655,6 +657,10 @@ class Mapping_Motippets:
             self.__keyboard.type(self.__snippet2)
             self.formatAndSend(self.__snippet2, display=2, syntax_color='snippet:')
             self.evaluateSC('eval')
+        elif num == 3:
+            self.__keyboard.type(self.__snippet3)
+            self.formatAndSend(self.__snippet3, display=2, syntax_color='snippet:')
+            self.evaluateSC('eval')        
 
     def miniSnippets(self, snippet_num, pianosection):
         """Type a mini snippet for specific pianosections'utf-8'
@@ -949,17 +955,6 @@ class Mapping_Motippets:
                 self.evaluateSC('eval')
                 self.formatAndSend('~huygens.stuk(' + str(mod) + ');', display=3, syntax_color='snippet:')
 
-        elif result_num == 5:
-            if text == 'comment':
-                self.__keyboard.type('// if true -> play Huyg')
-                self.enter()
-            elif text == 'code':
-                self.__keyboard.type('~huygens.stuk('+ str(mod) +');')
-                self.evaluateSC('eval')
-            elif text == 'less than':
-                self.__keyboard.type('~huygens.stuk('+ str(mod) +');')
-                self.evaluateSC('eval')
-
         elif result_num == 6:
             if text == 'comment':
                 self.__keyboard.type('HUYGENS! //is activating...')
@@ -986,7 +981,26 @@ class Mapping_Motippets:
                 self.enter()
             elif text == 'huygens':
                 self.__keyboard.type('~huygens.eind')
-                self.evaluateSC('eval')                 
+                self.evaluateSC('eval')     
+                
+            # motif 3 conditional huygens   
+        elif result_num == 99:
+            if text == 'comment':
+                self.__keyboard.type('// if true -> ...')
+                self.enter()
+                self.formatAndSend('if true -> ....', display=3, syntax_color='primitive:')
+            elif text == 'open':
+                self.__keyboard.type('open the gate;')
+                self.evaluateSC('eval')
+                self.formatAndSend('open the gate...?', display=3, syntax_color='snippet:')                    
+            elif text == 'code':
+                self.__keyboard.type('~huygens.stuk('+ str(mod) +');')
+                self.evaluateSC('eval')
+                self.formatAndSend('~huygens.stuk(' + str(mod) + ');', display=3, syntax_color='snippet:')
+            elif text == 'less than':
+                self.__keyboard.type('~huygens.stuk('+ str(mod) +');')
+                self.evaluateSC('eval')
+                self.formatAndSend('~huygens.stuk(' + str(mod) + ');', display=3, syntax_color='snippet:')                
 
     def customPass(self, name, content):
         """
