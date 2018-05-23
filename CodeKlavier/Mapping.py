@@ -19,6 +19,31 @@ display3 = 3333
 display4 = 4444
 display5 = 5555
 
+def get_hello_world_mapping(number):
+    """TODO: move this to a ini file?
+    """
+    #     midinumber, (' <type> | <press_and_release> , <char> | <string>, <thing to have mottipets send>)
+    map = {69: ('type', 'h', 'h'),
+           74: ('type', 'l', 'l'),
+           60: ('type', 'kisses for the misses', 'dgdfgdf'),
+           33: ('evaluateSC', '\nevaluate\n', '\nevaluate\n'),
+           56: ('press_and_release', Key.space, '\n')
+           }
+    return map.get(number, ('noaction', 'xxx', 'xxx'))
+    #return map.get(number,('type','x', ''))
+
+def get_hello_world_mapping_alt(number):
+    """TODO: move this to a ini file?
+    """
+    #     midinumber, (' <type> | <press_and_release> , <char> | <string>, <thing to have mottipets send>)
+    map = {69: ('type', 'h', 'h'),
+           74: ('type', 'l', 'l'),
+           56: ('press_and_release', Key.space, '\n'),
+           33: ('evaluateSC', '\nevaluate\n', '\nevaluate\n')
+           }
+    return map.get(number,('type','<>', ''))
+
+
 class Mapping_HelloWorld():
     """Mapping for the Hello World prototype.
 
@@ -59,7 +84,7 @@ class Mapping_HelloWorld():
             self.__keyboard.type('.')
             self.__keyboard.release(Key.cmd)
 
-    def formatAndSend(self, msg='', encoding='utf-8', host='localhost', display=1, syntax_color=''):
+    def formatAndSend(self, msg='', encoding='utf-8', host='localhost', display=1, syntax_color='', spacing=True):
         """format and prepare a string for sending it over UDP socket
 
         :param str msg: the string to be sent
@@ -77,149 +102,158 @@ class Mapping_HelloWorld():
         elif display == 4:
             port = 4444
 
+        spacer = '\n' if spacing else ''
         if self.use_display:
-            return self.__socket.sendto(bytes(syntax_color+'\n'+msg, encoding), (host, port))
+            return self.__socket.sendto(bytes(syntax_color+spacer+msg, encoding), (host, port))
         else:
             return
 
-    def mapping(self, midinumber):
+    def mapping(self, midinumber, display=2, syntax_color=None, spacing=False):
         """Type a letter that is coupled to this midi note.
 
         :param int midinumber: the midinumber that is played
+        TODO: clarify extra params
         """
-        # chars and nums
+        action, key, format_and_send = get_hello_world_mapping(number=midinumber)
+        if action == 'type':
+            self.__keyboard.type(key)
+        elif action == 'press_and_release':
+            self.__keyboard.press(key)
+            self.__keyboard.release(key)
+        elif action == 'evaluateSC':
+            self.evaluateSC()
+        self.formatAndSend(key, display=display, syntax_color=syntax_color, spacing=spacing)
+        """# chars and nums
         if midinumber == 69:
             self.__keyboard.type('h')
-            self.formatAndSend('h', display=2)
+            self.formatAndSend('h', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 74:
             self.__keyboard.type('l')
-            self.formatAndSend('l', display=2)
+            self.formatAndSend('l', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 63:
             self.__keyboard.type('e')
-            self.formatAndSend('e', display=2)
+            self.formatAndSend('e', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 80:
             self.__keyboard.type('o')
-            self.formatAndSend('o', display=2)
+            self.formatAndSend('o', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 68:
             self.__keyboard.type('o')
-            self.formatAndSend('o', display=2)
+            self.formatAndSend('o', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 81:
             self.__keyboard.type('r')
-            self.formatAndSend('r', display=2)
+            self.formatAndSend('r', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 88:
             self.__keyboard.type('w')
-            self.formatAndSend('w', display=2)
+            self.formatAndSend('w', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 64:
             self.__keyboard.type('d')
-            self.formatAndSend('d', display=2)
+            self.formatAndSend('d', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber ==48:
             self.__keyboard.type('t')
-            self.formatAndSend('t', display=2)
+            self.formatAndSend('t', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 47:
             self.__keyboard.type('s')
-            self.formatAndSend('s', display=2)
+            self.formatAndSend('s', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 38:
             self.__keyboard.type('a')
-            self.formatAndSend('a', display=2)
+            self.formatAndSend('a', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 40:
             self.__keyboard.type('n')
-            self.formatAndSend('n', display=2)
+            self.formatAndSend('n', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 42:
             self.__keyboard.type('i')
-            self.formatAndSend('i', display=2)
+            self.formatAndSend('i', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 44:
             self.__keyboard.type('o')
-            self.formatAndSend('o', display=2)
+            self.formatAndSend('o', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 45:
             self.__keyboard.type('p')
-            self.formatAndSend('p', display=2)
+            self.formatAndSend('p', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 59:
             self.__keyboard.type('0')
-            self.formatAndSend('0', display=2)
+            self.formatAndSend('0', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 60:
             self.__keyboard.type('1')
-            self.formatAndSend('1', display=2)
+            self.formatAndSend('1', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 61:
             self.__keyboard.type('2')
-            self.formatAndSend('2', display=2)
+            self.formatAndSend('2', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 62:
             self.__keyboard.type('3')
-            self.formatAndSend('3', display=2)
+            self.formatAndSend('3', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 89:
             self.__keyboard.type('4')
-            self.formatAndSend('4', display=2)
+            self.formatAndSend('4', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 90:
             self.__keyboard.type('5')
-            self.formatAndSend('5', display=2)
+            self.formatAndSend('5', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 91:
             self.__keyboard.type('6')
-            self.formatAndSend('6', display=2)
+            self.formatAndSend('6', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 92:
             self.__keyboard.type('7')
-            self.formatAndSend('7', display=2)
+            self.formatAndSend('7', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 93:
             self.__keyboard.type('8')
-            self.formatAndSend('8', display=2)
+            self.formatAndSend('8', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 94:
             self.__keyboard.type('9')
-            self.formatAndSend('9', display=2)
+            self.formatAndSend('9', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 46:
             self.__keyboard.type('m')
-            self.formatAndSend('m', display=2)
+            self.formatAndSend('m', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 99:
             self.__keyboard.type('j')
-            self.formatAndSend('j', display=2)
+            self.formatAndSend('j', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 104:
             self.__keyboard.type('y')
-            self.formatAndSend('y', display=2)
+            self.formatAndSend('y', display=display, syntax_color=syntax_color, spacing=spacing)
        # special keys
         elif midinumber == 56:
             self.__keyboard.press(Key.space)
             self.__keyboard.release(Key.space)
-            self.formatAndSend('\n', display=2)
+            self.formatAndSend('\n', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 32:
             self.__keyboard.press(Key.enter)
             self.__keyboard.release(Key.enter)
             self.evaluateSC()
-            self.formatAndSend('\nevaluate\n', display=2)
+            self.formatAndSend('\nevaluate\n', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 50:
             self.__keyboard.type('~')
-            self.formatAndSend('~', display=2)
+            self.formatAndSend('~', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 51:
             self.__keyboard.type('+')
-            self.formatAndSend('+', display=2)
+            self.formatAndSend('+', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 54:
             self.__keyboard.type('-')
-            self.formatAndSend('-', display=2)
+            self.formatAndSend('-', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 49:
             self.__keyboard.type('=')
-            self.formatAndSend('=', display=2)
+            self.formatAndSend('=', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 103:
             self.__keyboard.type('?')
-            self.formatAndSend('?', display=2)
+            self.formatAndSend('?', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 105:
             self.__keyboard.type('.!')
-            self.formatAndSend('.!', display=2)
+            self.formatAndSend('.!', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 95:
             self.__keyboard.press(Key.backspace)
             self.__keyboard.release(Key.backspace)
       # supercollider commands:
         elif midinumber == 33:
             self.evaluateSC()
-            self.formatAndSend('\nevaluate\n', display=2)
+            self.formatAndSend('\nevaluate\n', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 22:
             self.__keyboard.type('.tempo')
-            self.formatAndSend('.tempo', display=2)
+            self.formatAndSend('.tempo', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 21:
             self.__keyboard.type('.play')
-            self.formatAndSend('.play', display=2)
+            self.formatAndSend('.play', display=display, syntax_color=syntax_color, spacing=spacing)
         elif midinumber == 102:
             self.__keyboard.type('TempoClock.default')
-            self.formatAndSend('TempoClock.default', display=5)
-    
-      
-
-class Mapping_HelloWorld_NKK:
+            self.formatAndSend('TempoClock.default', display=display, syntax_color=syntax_color, spacing=spacing)
+"""
+class Mapping_HelloWorld_text:
     """Mapping of the HelloWorld piece
     as played on the Leiden Nacht van Kunst en Kultuur.
     """
@@ -227,7 +261,8 @@ class Mapping_HelloWorld_NKK:
     def __init__(self):
         """Mapping for the Hello World NKK (installation flavour).
         """
-        print("Using the Hello World mapping (NKK)")
+        print("Using the Hello World mapping_text")
+        print('Change this line if you want some other text')
         self.__keyboard = Controller()
 
     def evaluateSC(self, what):
@@ -360,8 +395,8 @@ class Mapping_HelloWorld_NKK:
 
 class Mapping_Motippets:
     """Mapping for the Motippets prototype.
-    
-       Includes Hello World mappings for the Hybrid prototype  
+
+       Includes Hello World mappings for the Hybrid prototype
     """
     def __init__(self, debug=True):
         if debug:
@@ -375,7 +410,6 @@ class Mapping_Motippets:
             self.__snippet1 = config['snippets'].get('snippet1')
             self.__snippet2 = config['snippets'].get('snippet2')
             self.__snippet3 = config['snippets'].get('snippet3')
-            
 
             self.__mini_snippet_hi_1 = config['snippets'].get('mini_snippet_hi_1')
             self.__mini_unmap_hi_2 = config['snippets'].get('mini_unmap_hi_2')
@@ -478,7 +512,27 @@ class Mapping_Motippets:
 
         :param int midinumber: the midinumber that is played
         """
+        if prototype == 'Hello World':
+            action, key, format_and_send = get_hello_world_mapping(number=midinumber)
+            if action == 'type':
+                self.__keyboard.type(key)
+            elif action == 'press_and_release':
+                self.__keyboard.press(key)
+                self.__keyboard.release(key)
+            self.formatAndSend(format_and_send, display=1, syntax_color='hello', spacing=False)
+        if prototype == 'Hello World ALT':
+            action, key, format_and_send = get_hello_world_mapping_alt(number=midinumber)
+            if action == 'type':
+                self.__keyboard.type(key)
+            elif action == 'press_and_release':
+                self.__keyboard.press(key)
+                self.__keyboard.release(key)
+            self.formatAndSend(format_and_send, display=1, syntax_color='hello', spacing=False)
+        if prototype == 'Motippets':
+            if midinumber == 66:
+                self.evaluateSC('eval')
         # chars and nums
+        """
         if midinumber == 69:
             self.__keyboard.type('h')
             self.formatAndSend('h', display=5, syntax_color='hello:', spacing=False)
@@ -607,12 +661,11 @@ class Mapping_Motippets:
             self.__keyboard.type('TempoClock.default')
             self.formatAndSend('TempoClock.default', display=5, syntax_color='hello:', spacing=False)
         elif midinumber == 108:
-            self.goDown()         
-    # motippets only commands:
-        elif prototype == 'Motippets':
-            if midinumber == 66:
-                self.evaluateSC('eval')       
-    
+            self.goDown()
+            """
+        # motippets only commands:
+
+
     def formatAndSend(self, msg='', encoding='utf-8', host='localhost', display=1, syntax_color='', spacing=True):
         """format and prepare a string for sending it over UDP socket
 
@@ -633,8 +686,8 @@ class Mapping_Motippets:
         elif display == 4:
             port = 4444
         elif display == 5:
-            port = 5555       
-        
+            port = 5555
+
         if spacing:
             newline = '\n'
         else:
@@ -660,7 +713,7 @@ class Mapping_Motippets:
         elif num == 3:
             self.__keyboard.type(self.__snippet3)
             self.formatAndSend(self.__snippet3, display=2, syntax_color='snippet:')
-            self.evaluateSC('eval')        
+            self.evaluateSC('eval')
 
     def miniSnippets(self, snippet_num, pianosection):
         """Type a mini snippet for specific pianosections'utf-8'
@@ -885,7 +938,7 @@ class Mapping_Motippets:
             elif text == 'less than':
                 #self.__keyboard.type('~gong.play(' + str(mod) + ');');
                 #self.evaluateSC('eval')
-                self._osc.send_message("/gong", str(mod))                
+                self._osc.send_message("/gong", str(mod))
                 self.formatAndSend('~gong.play(' + str(mod) + ');', display=3, syntax_color='snippet:')
 
 
@@ -962,7 +1015,7 @@ class Mapping_Motippets:
             elif text == 'start':
                 self.__keyboard.type('// HUYGENS countdown started!')
                 self.evaluateSC('eval')
-            elif text == 'code':               
+            elif text == 'code':
                 self.__keyboard.type("")
                 self.enter()
                 self.__keyboard.type("  ____   ____   ____  __  __ _ ")
@@ -981,9 +1034,9 @@ class Mapping_Motippets:
                 self.enter()
             elif text == 'huygens':
                 self.__keyboard.type('~huygens.eind')
-                self.evaluateSC('eval')     
-                
-            # motif 3 conditional huygens   
+                self.evaluateSC('eval')
+
+            # motif 3 conditional huygens
         elif result_num == 99:
             if text == 'comment':
                 self.__keyboard.type('// if true -> ...')
@@ -992,7 +1045,7 @@ class Mapping_Motippets:
             elif text == 'open':
                 self.__keyboard.type('open the gate;')
                 self.evaluateSC('eval')
-                self.formatAndSend('open the gate...?', display=3, syntax_color='snippet:')                    
+                self.formatAndSend('open the gate...?', display=3, syntax_color='snippet:')
             elif text == 'code':
                 self.__keyboard.type('~huygens.stuk('+ str(mod) +');')
                 self.evaluateSC('eval')
@@ -1000,12 +1053,12 @@ class Mapping_Motippets:
             elif text == 'less than':
                 self.__keyboard.type('~huygens.stuk('+ str(mod) +');')
                 self.evaluateSC('eval')
-                self.formatAndSend('~huygens.stuk(' + str(mod) + ');', display=3, syntax_color='snippet:')                
+                self.formatAndSend('~huygens.stuk(' + str(mod) + ');', display=3, syntax_color='snippet:')
 
     def customPass(self, name, content):
         """
         post custom string message on codespace and display
-        
+
         :param string name: a label to print in front of the string
         :param string content: the message or content
         """
@@ -1016,11 +1069,11 @@ class Mapping_Motippets:
     def onlyDisplay(self, content, tag=1, warning=False):
         """
         print a custom string on the UDP display only!
-        
+
         :param string content: the message or content
         :param int tag: the reference to a color tag
         :param warning: wether to print the message with the warning color tag (i.e. red)
-        
+
         """
         if warning:
             self.formatAndSend(content, display=4, syntax_color='warning:')

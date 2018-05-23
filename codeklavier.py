@@ -17,13 +17,17 @@ from CK_Setup import Setup
 from hello_world import hello_world
 from motippets import motippets
 from hybrid import hybrid
+from Mapping import *
 
-PROTOTYPES = ('hello_world', 'motippets', 'hybrid')
+PROTOTYPES = {'hello_world': 'hello_world.main(map=Mapping_HelloWorld())',
+              'hello_world_text': 'hello_world.main(map=Mapping_HelloWorld_text())',
+              'motippets': 'motippets.main()',
+              'hybrid': 'hybrid.main()'}
 
 def doHelp():
     """
     Show the help for running this script.
-    """   
+    """
     print('This script will help you to run the CodeKlavier.')
     print('')
     print('Usage: ./codeklaver.py [OPTION]')
@@ -93,10 +97,10 @@ def perform(configfile='default_setup.ini', prototype='hello_world'):
     :param string configfile: Path to the configuration file (default: default_setup.ini)
     :param string prototype: name of the prototype to boot
     """
-    if (prototype not in PROTOTYPES):
+    if (prototype not in PROTOTYPES.keys()):
         raise ValueError('This prototype doesn\'t exist. Please retry.')
 
-    eval(prototype + '.main()')
+    eval(PROTOTYPES.get(prototype))
 
 def perform_interactive(configfile='default_setup.ini'):
     """
@@ -112,7 +116,7 @@ def perform_interactive(configfile='default_setup.ini'):
         print('')
         print('The available prototypes are:')
 
-        for p in PROTOTYPES:
+        for p in PROTOTYPES.keys():
             count = count + 1
             print(' ', count, '.' + p)
         print('')

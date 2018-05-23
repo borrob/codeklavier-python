@@ -218,66 +218,66 @@ def noteCounter(timer=10, numberOfnotes=100, result_num=1, debug=True, perpetual
     #reset parameter global once it has passed effectively:
     global param_interval, mapping, notecounter, motif3_notecounter
     param_interval= 0
-    
+
     if perpetual:
         time_counter = 0
-    
+
         while perpetual:
-            
+
             if time_counter > timer:
                 motif3_notecounter = 0 #reset counter everytime
                 time_counter = 0
-            
+
             if motif3_notecounter > numberOfnotes:
                 print('yes')
                 motif3_notecounter = 0
-            
+
                 if result_num == 99:
                     print('yes 2')
-                    mapping.result(result_num, 'code', str(motif3_notecounter))  
-            else: 
+                    mapping.result(result_num, 'code', str(motif3_notecounter))
+            else:
                 print('no', motif3_notecounter, numberOfnotes)
-            
+
             time_counter += 1
-            
+
             if debug:
-                print('note counter motif 3: ', motif3_notecounter, numberOfnotes, result_num)                
-            
+                print('note counter motif 3: ', motif3_notecounter, numberOfnotes, result_num)
+
             time.sleep(1)
-            
-    
+
+
     else:
         for s in range(0, timer):
-            
+
             if notecounter > numberOfnotes:
                 mapping.customPass('Total notes played: ', str(notecounter)+'!!!')
-    
+
                 if result_num == 1:
                     mapping.result(result_num, 'code')
                     mainMem._motif2_counter = 0 #reset the motif counter so it can be played again...
-    
+
                 elif result_num == 2: #this is for snippet 1 - change the names accordingly
                     mapping.result(result_num, 'code')
                     memMid._motif1_counter = 0
-    
+
                 elif result_num == 3:
                     mapping.result(result_num, 'code', round(notecounter*random.uniform(-2, 10)))
-    
+
                 elif result_num == 4:
                     mapping.result(4, 'start')
                     gomb = Thread(target=gong_bomb, name='gomb', args=(timer, True))
                     gomb.start()
-    
+
                 elif result_num == 5:
-                    mapping.result(result_num, 'code', random.randint(1, 80))               
-    
+                    mapping.result(result_num, 'code', random.randint(1, 80))
+
                 break
             else:
                 mapping.customPass('notes played: ', str(notecounter))
                 conditionals[1]._conditionalStatus = 0
                 conditionals[1]._resultCounter = 0
                 conditionals[1]._conditionalCounter = 0
-    
+
             if debug:
                 print(notecounter)
             time.sleep(1)
@@ -329,7 +329,7 @@ def main():
     """
     global mapping, parameters, conditionalsRange, conditionals, \
            param_interval, threads_are_perpetual, range_trigger, \
-           notecounter, motif3_notecounter, hello_world_on, noteCounter, ck_deltatime, \
+           notecounter, motif3_notecounter, hello_world_on, hello_world_alt_on, noteCounter, ck_deltatime, \
            ck_deltatime_mem
 
     codeK.print_lines(20, 1)
@@ -392,7 +392,7 @@ def main():
                             motif1_played = memMid._motif1_counter
                             motif2_played = mainMem._motif2_counter
                             motif3_played = memHi._motif3_counter
-                            
+
 
                             minimotif1_low_mapped = memLow._unmapCounter1
                             minimotif2_low_mapped = memLow._unmapCounter2
@@ -432,8 +432,8 @@ def main():
                                 threads['motif3_conditional'] = Thread(target=noteCounter, name='conditional note counter perpetual thread', args=(20, 100, 99, True, True))
                                 threads['motif3_conditional'].start()
                                 memHi._motif3_counter = -1 #one off thread
-                                
-                                
+
+
                             if isinstance(conditional_value, int) and conditional_value > 0:
                                 conditional_params = parameters.parse_midi(msg, 'params', ck_deltadif)
 
@@ -511,14 +511,14 @@ def ck_loop(prototype='hello world'):
     """
     global mapping, parameters, conditionalsRange, conditionals, \
            param_interval, threads_are_perpetual, range_trigger, \
-           notecounter, hello_world_on, noteCounter, motippets_is_listening, \
+           notecounter, hello_world_on, hello_world_alt_on, noteCounter, motippets_is_listening, \
            ck_deltatime, ck_deltatime_mem
 
     codeK_thread = Setup()
     codeK_thread.open_port(myPort)
 
     print('port', myPort)
-    
+
     #go to the end of the codespace screen
     mapping.goDown()
 
@@ -535,20 +535,56 @@ def ck_loop(prototype='hello world'):
                             if (message[0] == device_id):
 
                                 if message[1] == 106:
-                                    print('toggle prototype -> Motippets')
+                                    print('toggle prototype -> Hello World alt')
 
                                     codeK_thread.close_port()
 
                                     #mapping = Mapping_Motippets()
 
                                     hello_world_on = False
+                                    hello_world_alt_on = True
+                                    notecounter = 0
+
+                                    threads['toggle_m'] = Thread(target=ck_loop, name='ck loop thread', args=('hello world alt',))
+                                    threads['toggle_m'].start()
+
+                                mapping.mapping(message[1])
+
+                time.sleep(0.01)
+
+        except KeyboardInterrupt:
+            print('')
+        finally:
+            #print('hybrid thread stopped')
+            codeK_thread.end()
+
+    if prototype == 'hello world alt':
+        try:
+            while hello_world_alt_on:
+                msg = codeK_thread.get_message()
+
+                if msg:
+                    message, deltatime = msg
+
+                    if message [0] != 254:
+                        if message[2] > 0: #only noteOn
+                            if (message[0] == device_id):
+
+                                if message[1] == 106:
+                                    print('toggle prototype -> Motippets')
+
+                                    codeK_thread.close_port()
+
+                                    #mapping = Mapping_Motippets()
+
+                                    hello_world_alt_on = False
                                     motippets_is_listening = True
                                     notecounter = 0
 
                                     threads['toggle_m'] = Thread(target=ck_loop, name='ck loop thread', args=('motippets',))
                                     threads['toggle_m'].start()
 
-                                mapping.mapping(message[1])
+                                mapping.mapping(message[1], prototype='Hello World ALT')
 
                 time.sleep(0.01)
 

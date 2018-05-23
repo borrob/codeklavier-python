@@ -12,17 +12,21 @@ from CK_Setup import Setup
 from hello_classes import HelloWorld
 from Mapping import Mapping_HelloWorld
 
-def main(configfile='default_setup.ini'):
+def main(configfile='default_setup.ini', map=None):
     """
     Start hello world!
 
     :param int configfile: use this configuration file. Defaults to 'default_setup.ini'.
+    :param class map: the mapping to use for the helloworld performance.
     """
 
     #Read config and settings
+    if map == None:
+        print('No mapping supplied, using the default map: Mapping_HelloWorld')
+        map = Mapping_HelloWorld()
     config = configparser.ConfigParser()
     config.read(configfile)
-    
+
     try:
         myPort = config['midi'].getint('port')
         device_id = config['midi'].getint('device_id')
@@ -31,19 +35,19 @@ def main(configfile='default_setup.ini'):
 
     if (myPort == None or device_id == None):
         raise LookupError('Missing key information in the config file.')
-    
+
     codeK = Setup()
     codeK.open_port(myPort)
-    
+
     # Use your favourite mapping of the keys
-    mapping = Mapping_HelloWorld()
-    
+    mapping = map
+
     print("\nCodeKlavier is ready and ON.")
     print("You are performing: HELLO WORLD")
     print("\nPress Control-C to exit.")
-    
+
     codeK.set_callback(HelloWorld(myPort, mapping, device_id))
-    
+
     # Loop to program to keep listening for midi input
     try:
         while True:
