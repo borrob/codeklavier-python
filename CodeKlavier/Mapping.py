@@ -23,23 +23,59 @@ def get_hello_world_mapping(number):
     """TODO: move this to a ini file?
     """
     #     midinumber, (' <type> | <press_and_release> , <char> | <string>, <thing to have mottipets send>)
-    map = {69: ('type', 'h', 'h'),
-           74: ('type', 'l', 'l'),
+    map = {72: ('type', 'h', 'h'),
+           73: ('type', 'l', 'l'),
            60: ('type', 'kisses for the misses', 'dgdfgdf'),
            33: ('evaluateSC', '\nevaluate\n', '\nevaluate\n'),
            56: ('press_and_release', Key.space, '\n')
-           }
-    return map.get(number, ('noaction', 'xxx', 'xxx'))
+
+    #return map.get(number, ('noaction', 'xxx', 'xxx'))
     #return map.get(number,('type','x', ''))
 
 def get_hello_world_mapping_alt(number):
     """TODO: move this to a ini file?
     """
     #     midinumber, (' <type> | <press_and_release> , <char> | <string>, <thing to have mottipets send>)
-    map = {69: ('type', 'h', 'h'),
-           74: ('type', 'l', 'l'),
-           56: ('press_and_release', Key.space, '\n'),
-           33: ('evaluateSC', '\nevaluate\n', '\nevaluate\n')
+    map = {72: ('type', 'b', 'b'),
+           73: ('type', 'a', 'a'),
+           74: ('type', 'c', 'c'),
+           75: ('type', 'e', 'e'),
+           76: ('type', 'f', 'f'),
+           77: ('type', 'i', 'i'),
+           78: ('type', 'g', 'g'),
+           79: ('type', 'o', 'o'),
+           80: ('press_and_release', Key.space, '\n'),
+           81: ('type', 'u', 'u'),
+           82: ('type', 'h', 'h'),
+           83: ('type', 'j', 'j'),
+           84: ('type', 'a', 'a'),
+           85: ('type', 'k', 'k'),
+           86: ('type', 'e', 'e'),
+           87: ('type', 'l', 'l'),}
+           88: ('type', 'm', 'm'),}
+           89: ('type', 'i', 'i'),}
+           90: ('type', 'n', 'n'),}
+           91: ('type', 'o', 'o'),}
+           92: ('press_and_release', Key.space, '\n'),
+           93: ('type', 'u', 'u'),}
+           94: ('type', 'p', 'p'),}
+           95: ('type', 's', 's'),}
+           96: ('type', '0', '0'),}
+           97: ('type', 't', 't'),}
+           98: ('type', '1', '1'),}
+           99: ('type', 'w', 'w'),}
+           100: ('type', '.', '.'),}
+           101: ('type', '2', '2'),}
+           102: ('type', ',', ','),}
+           103: ('type', '3', '3'),}
+           104: ('press_and_release', Key.space, '\n'),
+           105: ('type', '4', '4'),}
+           106: ('type', '!', '!'),}
+           92: ('press_and_release', Key.enter, '\n'),
+           108: ('type', 'l', 'l'),}
+
+           34: ('press_and_release', Key.space, '\n'),
+           44: ('evaluateSC', '\nevaluate\n', '\nevaluate\n')
            }
     return map.get(number,('type','<>', ''))
 
