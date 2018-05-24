@@ -28,9 +28,9 @@ def get_hello_world_mapping(number):
            60: ('type', 'kisses for the misses', 'dgdfgdf'),
            33: ('evaluateSC', '\nevaluate\n', '\nevaluate\n'),
            56: ('press_and_release', Key.space, '\n')
+          }
 
-    #return map.get(number, ('noaction', 'xxx', 'xxx'))
-    #return map.get(number,('type','x', ''))
+    return map.get(number, ('noaction', 'xxx', 'xxx'))
 
 def get_hello_world_mapping_alt(number):
     """TODO: move this to a ini file?
@@ -73,12 +73,11 @@ def get_hello_world_mapping_alt(number):
            106: ('type', '!', '!'),}
            92: ('press_and_release', Key.enter, '\n'),
            108: ('type', 'l', 'l'),}
-
            34: ('press_and_release', Key.space, '\n'),
            44: ('evaluateSC', '\nevaluate\n', '\nevaluate\n')
            }
-    return map.get(number,('type','<>', ''))
 
+    return map.get(number,('type','<>', ''))
 
 class Mapping_HelloWorld():
     """Mapping for the Hello World prototype.
