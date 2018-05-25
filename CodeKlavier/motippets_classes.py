@@ -170,7 +170,8 @@ class Motippets(object):
                         self.mapscheme.miniSnippets(2, 'hi with unmap')
 
                     motif1_played = self.compare_motif(
-                        self._memory, Motifs.get('motif_1'),
+                        self._memory, 'motif_1',
+                        Motifs.get('motif_1'),
                         note, False)
 
                     if motif1_played and self._motif1_counter == 0:
@@ -560,7 +561,6 @@ class Motippets(object):
 
         TODO: describe input params
         """
-
         if motiftype == 'mini':
             if note in motif:
                 self._miniMotifs.append(note)
