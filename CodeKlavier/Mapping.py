@@ -33,12 +33,45 @@ def get_hello_world_mapping(number):
        :param number int: the midinumber
        :rtype list of strings (action to be taken, print command, format and send command)
     """
-    map = {72: ('type', 'h', 'h'),
-           73: ('type', 'l', 'l'),
-           60: ('type', 'kisses for the misses', 'dgdfgdf'),
-           33: ('evaluateSC', '\nevaluate\n', '\nevaluate\n'),
-           56: ('press_and_release', Key.space, '\n')
-          }
+    map = {69: ('type', 'h', 'h'),
+           63: ('type', 'e', 'e'),
+           74: ('type', 'l', 'l'),
+           68: ('type', 'o', 'o'),
+           88: ('type', 'w', 'w'),
+           81: ('type', 'r', 'r'),
+           80: ('type', 'o', 'o'),
+           64: ('type', 'd', 'd'),
+           48: ('type', 't', 't'),
+           47: ('type', 's', 's'),
+           38: ('type', 'a', 'a'),
+           40: ('type', 'n', 'n'),
+           42: ('type', 'i', 'i'),
+           44: ('type', 'o', 'o'),
+           45: ('type', 'p', 'p'),
+           59: ('type', '0', '0'),
+           60: ('type', '1', '1'),
+           61: ('type', '2', '2'),
+           62: ('type', '3', '3'),
+           46: ('type', 'm', 'm'),
+           99: ('type', 'j', 'j'),
+           104: ('type', 'y', 'y'),
+           56: ('press_and_release', Key.space, '\n'),
+           32: ('goDown', None, None),
+           50: ('type', '~', '~'),
+           51: ('type', '+', '+'),
+           54: ('type', '-', '-'),
+           49: ('type', '=', '='),
+           97: ('type', 'c', 'c'),
+           93: ('type', 'l', 'l'),
+           96: ('type', 'o', 'o'),
+           91: ('type', 'k', 'k'),
+           95: ('press_and_release', Key.backspace, '\n'),
+           22: ('type', '.tempo', '.tempo'),
+           21: ('type', '.play', '.play'),
+           108: ('goDown', None, None),
+           34: ('press_and_release', Key.space, '\n'),
+           33: ('evaluateSC', '\nevaluate\n', '\nevaluate\n')
+           }
 
     return map.get(number, ('noaction', 'xxx', 'xxx'))
 
@@ -56,39 +89,39 @@ def get_hello_world_mapping_alt(number):
            73: ('type', 'a', 'a'),
            74: ('type', 'c', 'c'),
            75: ('type', 'e', 'e'),
-           76: ('type', 'f', 'f'),
-           77: ('type', 'i', 'i'),
-           78: ('type', 'g', 'g'),
-           79: ('type', 'o', 'o'),
-           80: ('press_and_release', Key.space, '\n'),
-           81: ('type', 'u', 'u'),
-           82: ('type', 'h', 'h'),
-           83: ('type', 'j', 'j'),
-           84: ('type', 'a', 'a'),
-           85: ('type', 'k', 'k'),
-           86: ('type', 'e', 'e'),
-           87: ('type', 'l', 'l'),}
-           88: ('type', 'm', 'm'),}
-           89: ('type', 'i', 'i'),}
-           90: ('type', 'n', 'n'),}
-           91: ('type', 'o', 'o'),}
-           92: ('press_and_release', Key.space, '\n'),
-           93: ('type', 'u', 'u'),}
-           94: ('type', 'p', 'p'),}
-           95: ('type', 's', 's'),}
-           96: ('type', '0', '0'),}
-           97: ('type', 't', 't'),}
-           98: ('type', '1', '1'),}
-           99: ('type', 'w', 'w'),}
-           100: ('type', '.', '.'),}
-           101: ('type', '2', '2'),}
-           102: ('type', ',', ','),}
-           103: ('type', '3', '3'),}
-           104: ('press_and_release', Key.space, '\n'),
-           105: ('type', '4', '4'),}
-           106: ('type', '!', '!'),}
-           92: ('press_and_release', Key.enter, '\n'),
-           108: ('type', 'l', 'l'),}
+           76: ('type', 'd', 'd'),
+           77: ('type', 'f', 'f'),
+           78: ('type', 'i', 'i'),
+           79: ('type', 'g', 'g'),
+           80: ('type', 'o', 'o'),
+           81: ('press_and_release', Key.space, '\n'),
+           82: ('type', 'u', 'u'),
+           83: ('type', 'h', 'h'),
+           84: ('type', 'j', 'j'),
+           85: ('type', 'a', 'a'),
+           86: ('type', 'k', 'k'),
+           87: ('type', 'e', 'e'),
+           88: ('type', 'l', 'l'),
+           89: ('type', 'm', 'm'),
+           90: ('type', 'i', 'i'),
+           91: ('type', 'n', 'n'),
+           92: ('type', 'o', 'o'),
+           93: ('press_and_release', Key.space, '\n'),
+           94: ('type', 'u', 'u'),
+           95: ('type', 'p', 'p'),
+           96: ('type', 'r', 'r'),
+           97: ('type', '0', '0'),
+           98: ('type', 's', 's'),
+           99: ('type', '1', '1'),
+           100: ('type', 't', 't'),
+           101: ('type', 'v', 'v'),
+           102: ('type', '2', '2'),
+           103: ('type', 'w', 'w4'),
+           104: ('type', '3', '3'),
+           105: ('press_and_release', Key.space, '\n'),
+           106: ('type', '4', '4'),
+           107: ('type', '!', '!'),
+           108: ('press_and_release', Key.enter, '\n'),
            34: ('press_and_release', Key.space, '\n'),
            44: ('evaluateSC', '\nevaluate\n', '\nevaluate\n')
            }
@@ -445,9 +478,24 @@ class Mapping_Motippets:
         elif prototype == 'Hello World ALT':
             action, key, format_and_send = get_hello_world_mapping_alt(number=midinumber)
         elif prototype == 'Motippets':
-            if midinumber == 66:
+            if midinumber == 66: #TODO: fix hardcoding of midinumber
                 self.evaluateSC('eval')
-                return #no further action needed -> return
+                return
+            if midinumber == 108: #TODO: fix hardcoding of midinumber
+                self.goDown()
+                return
+
+        if action == 'type':
+            self.__keyboard.type(key)
+        elif action == 'press_and_release':
+            self.__keyboard.press(key)
+            self.__keyboard.release(key)
+        elif action == 'evaluateSC':
+            self.evaluateSC('eval')
+        elif action == 'goDown':
+            self.goDown()
+            return
+        self.formatAndSend(format_and_send, display=1, syntax_color='hello', spacing=False)
 
         #perform typing action for Hello World or Hellow World ALT
         if action == 'type':
