@@ -127,15 +127,6 @@ class Motippets(object):
                     note <= self._pianosections[1]):
                     self.memorize(note, 9, False, 'Mid: ')
 
-                    # see if motif_1 is played:
-                    motif1_played = self.compare_chordal_motif(
-                        self._memory, Motifs.get('motif_1'),
-                        note, deltatime=self._deltatime, deltatolerance=0.005, debug=False)
-
-                    if motif1_played and self._motif1_counter == 0:
-                        self.mapscheme.snippets(1)
-                        self._motif1_counter = 1
-
                     mini_motif_1_Mid_played = self.compare_motif(
                         self._memory, 'mini',
                         Motifs.get('mini_motif_1_mid'),
@@ -144,30 +135,17 @@ class Motippets(object):
                         self._memory, 'mini2',
                         Motifs.get('mini_motif_2_mid'),
                         note, False)
-                    #if self._motif1_played: ??? make a delegate?
-                    if (mini_motif_1_Mid_played and
-                        self._unmapCounter2 == 0):
-                        self.mapscheme.miniSnippets(1, 'mid')
-                    elif (mini_motif_1_Mid_played and
-                          self._unmapCounter2 > 0):
-                        self.mapscheme.miniSnippets(1, 'mid with unmap')
-                    elif (mini_motif_2_Mid_played and
-                          self._unmapCounter1 == 0):
-                        self.mapscheme.miniSnippets(2, 'mid')
-                    elif (mini_motif_2_Mid_played and
-                          self._unmapCounter1 > 0):
-                        self.mapscheme.miniSnippets(2, 'mid with unmap')
 
             ### HI SECTION
             elif section == 'hi':
                 if note > self._pianosections[1]:
                     self.memorize(note, 4, False, 'Hi: ')
-                    
+
                     motif3_played = self.compare_motif(self._memory, 'motif3', Motifs.get('motif_3'), note, False)
-                    
+
                     if motif3_played and self._motif3_counter == 0:
                         self.mapscheme.snippets(3)
-                        self._motif3_counter = 1                    
+                        self._motif3_counter = 1
 
                     mini_motif_1_Hi_played = self.compare_motif(
                         self._memory, 'mini',
@@ -191,6 +169,28 @@ class Motippets(object):
                           self._unmapCounter1 > 0):
                         self.mapscheme.miniSnippets(2, 'hi with unmap')
 
+                    motif1_played = self.compare_motif(
+                        self._memory, Motifs.get('motif_1'),
+                        note, False)
+
+                    if motif1_played and self._motif1_counter == 0:
+                        self.mapscheme.snippets(1)
+                        self._motif1_counter = 1
+
+
+                        #if self._motif1_played: ??? make a delegate?
+                        if (mini_motif_1_Mid_played and
+                            self._unmapCounter2 == 0):
+                            self.mapscheme.miniSnippets(1, 'mid')
+                        elif (mini_motif_1_Mid_played and
+                              self._unmapCounter2 > 0):
+                            self.mapscheme.miniSnippets(1, 'mid with unmap')
+                        elif (mini_motif_2_Mid_played and
+                              self._unmapCounter1 == 0):
+                            self.mapscheme.miniSnippets(2, 'mid')
+                        elif (mini_motif_2_Mid_played and
+                              self._unmapCounter1 > 0):
+                            self.mapscheme.miniSnippets(2, 'mid with unmap')
             ### TREMOLO
             elif section == 'tremoloHi':
                 if note > self._pianosections[1]:
@@ -559,8 +559,8 @@ class Motippets(object):
         i.e. detect if a motif is played
 
         TODO: describe input params
-        """       
-        
+        """
+
         if motiftype == 'mini':
             if note in motif:
                 self._miniMotifs.append(note)
