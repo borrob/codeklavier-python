@@ -164,7 +164,7 @@ class Motippets(object):
                         self._memory,
                         'motif 1',
                         Motifs.get('motif_1'),
-                        note, True)
+                        note, False)
 
                     if motif1_played and self._motif1_counter == 0:
                         self.mapscheme.snippets(1)
