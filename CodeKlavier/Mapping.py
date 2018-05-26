@@ -72,7 +72,7 @@ def get_hello_world_mapping(number):
            34: ('press_and_release', Key.space, '\n'),
            33: ('evaluateSC', '\nevaluate\n', '\nevaluate\n')
            }
-    return map.get(number, ('noaction', 'xxx', 'xxx'))
+    return map.get(number, ('noaction', None, None))
 
 def get_hello_world_mapping_alt(number):
     """Defines the hello world mapping (alternative).
@@ -494,7 +494,8 @@ class Mapping_Motippets:
         elif action == 'goDown':
             self.goDown()
             return
-        self.formatAndSend(format_and_send, display=1, syntax_color='hello', spacing=False)
+        if format_and_send:
+            self.formatAndSend(format_and_send, display=5, syntax_color='hello:', spacing=False)
 
     def formatAndSend(self, msg='', encoding='utf-8', host='localhost', display=1, syntax_color='', spacing=True):
         """format and prepare a string for sending it over UDP socket
@@ -522,7 +523,6 @@ class Mapping_Motippets:
             newline = '\n'
         else:
             newline = ''
-
         return self.__socket.sendto(bytes(syntax_color+newline+msg, encoding), (host, port))
 
     def snippets(self, num, configfile='default_setup.ini'):
