@@ -127,25 +127,16 @@ class Motippets(object):
                     note <= self._pianosections[1]):
                     self.memorize(note, 9, False, 'Mid: ')
 
-                    mini_motif_1_Mid_played = self.compare_motif(
-                        self._memory, 'mini',
-                        Motifs.get('mini_motif_1_mid'),
-                        note, False)
-                    mini_motif_2_Mid_played = self.compare_motif(
-                        self._memory, 'mini2',
-                        Motifs.get('mini_motif_2_mid'),
-                        note, False)
-
             ### HI SECTION
             elif section == 'hi':
                 if note > self._pianosections[1]:
                     self.memorize(note, 4, False, 'Hi: ')
 
-                    motif3_played = self.compare_motif(self._memory, 'motif3', Motifs.get('motif_3'), note, False)
-
-                    if motif3_played and self._motif3_counter == 0:
-                        self.mapscheme.snippets(3)
-                        self._motif3_counter = 1
+                    # motif3_played = self.compare_motif(self._memory, 'motif3', Motifs.get('motif_3'), note, False)
+                    #
+                    # if motif3_played and self._motif3_counter == 0:
+                    #     self.mapscheme.snippets(3)
+                    #     self._motif3_counter = 1
 
                     mini_motif_1_Hi_played = self.compare_motif(
                         self._memory, 'mini',
@@ -170,28 +161,28 @@ class Motippets(object):
                         self.mapscheme.miniSnippets(2, 'hi with unmap')
 
                     motif1_played = self.compare_motif(
-                        self._memory, 'motif_1',
+                        self._memory,
+                        'motif 1',
                         Motifs.get('motif_1'),
-                        note, False)
+                        note, True)
 
                     if motif1_played and self._motif1_counter == 0:
                         self.mapscheme.snippets(1)
                         self._motif1_counter = 1
 
-
                         #if self._motif1_played: ??? make a delegate?
-                        if (mini_motif_1_Mid_played and
+                        if (mini_motif_1_Hi_played and
                             self._unmapCounter2 == 0):
-                            self.mapscheme.miniSnippets(1, 'mid')
-                        elif (mini_motif_1_Mid_played and
+                            self.mapscheme.miniSnippets(1, 'hi')
+                        elif (mini_motif_1_Hi_played and
                               self._unmapCounter2 > 0):
-                            self.mapscheme.miniSnippets(1, 'mid with unmap')
-                        elif (mini_motif_2_Mid_played and
+                            self.mapscheme.miniSnippets(1, 'hi with unmap')
+                        elif (mini_motif_2_Hi_played and
                               self._unmapCounter1 == 0):
-                            self.mapscheme.miniSnippets(2, 'mid')
-                        elif (mini_motif_2_Mid_played and
+                            self.mapscheme.miniSnippets(2, 'hi')
+                        elif (mini_motif_2_Hi_played and
                               self._unmapCounter1 > 0):
-                            self.mapscheme.miniSnippets(2, 'mid with unmap')
+                            self.mapscheme.miniSnippets(2, 'hi with unmap')
             ### TREMOLO
             elif section == 'tremoloHi':
                 if note > self._pianosections[1]:

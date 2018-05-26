@@ -10,7 +10,7 @@ motifs = {}
 #91, 90, 86, 83, 86, 90, 91, 90, 86, 83, 86, 90, 95, 93, 91, 95, 97, 98, 90
 # Motifs by Anne Veinberg
 motifs_anne = {}
-motifs_anne['motif_1'] = [96]
+motifs_anne['motif_1'] = [91, 90]
 motifs_anne['motif_2'] = [70, 51, 62, 60, 44, 63, 66, 62, 55, 49]
 motifs_anne['motif_3'] = [84, 85, 86]
 motifs_anne['mini_motif_1_low'] = [35, 38, 42]
