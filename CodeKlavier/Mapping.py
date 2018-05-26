@@ -25,9 +25,9 @@ display5 = 5555
 
 def get_hello_world_mapping(number):
     """Defines the hello world mapping.
-    
+
        Translates a midinumber to a keyboard command.
-       
+
        TODO: move this to a ini file?
 
        :param number int: the midinumber
@@ -72,14 +72,13 @@ def get_hello_world_mapping(number):
            34: ('press_and_release', Key.space, '\n'),
            33: ('evaluateSC', '\nevaluate\n', '\nevaluate\n')
            }
-
     return map.get(number, ('noaction', 'xxx', 'xxx'))
 
 def get_hello_world_mapping_alt(number):
     """Defines the hello world mapping (alternative).
-    
+
        Translates a midinumber to a keyboard command.
-       
+
        TODO: move this to a ini file?
 
        :param number int: the midinumber
@@ -495,14 +494,6 @@ class Mapping_Motippets:
         elif action == 'goDown':
             self.goDown()
             return
-        self.formatAndSend(format_and_send, display=1, syntax_color='hello', spacing=False)
-
-        #perform typing action for Hello World or Hellow World ALT
-        if action == 'type':
-            self.__keyboard.type(key)
-        elif action == 'press_and_release':
-            self.__keyboard.press(key)
-            self.__keyboard.release(key)
         self.formatAndSend(format_and_send, display=1, syntax_color='hello', spacing=False)
 
     def formatAndSend(self, msg='', encoding='utf-8', host='localhost', display=1, syntax_color='', spacing=True):
